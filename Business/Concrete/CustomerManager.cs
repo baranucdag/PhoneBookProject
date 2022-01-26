@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using DataAccess.Abstract;
 using Entities;
 using System;
 using System.Collections.Generic;
@@ -11,24 +12,28 @@ namespace Business.Concrete
     public class CustomerManager : ICustomerService
     {
         ICustomerDal _customerDal;
+        CustomerManager(ICustomerDal customerDal)
+        {
+            _customerDal = customerDal;
+        }
         public void Add(Customer customer)
         {
-            throw new NotImplementedException();
+            _customerDal.Add(customer);
         }
 
         public void Delete(Customer customer)
         {
-            throw new NotImplementedException();
+            _customerDal.Delete(customer);
         }
 
         public List<Customer> GetAll()
         {
-            throw new NotImplementedException();
+            return _customerDal.GetAll();
         }
 
         public void Update(Customer customer)
         {
-            throw new NotImplementedException();
+            _customerDal.Update(customer);
         }
     }
 }

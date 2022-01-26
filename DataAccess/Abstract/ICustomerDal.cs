@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Abstract
+namespace DataAccess.Abstract
 {
     public interface ICustomerDal
     {
         List<Customer> GetAll();
         void Add(Customer customer);
         void Update(Customer customer);
+        void Delete(Customer customer);
     }
 }

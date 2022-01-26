@@ -1,4 +1,4 @@
-﻿using Core.Abstract;
+﻿using DataAccess.Abstract;
 using DataAccess.Concrete;
 using Entities;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +18,7 @@ namespace Core.Concrete
             {
                 var addedEntity = context.Entry(entity);  //get reference
                 addedEntity.State = EntityState.Added;    //add entity
-                context.SaveChanges();                    //sace changed
+                context.SaveChanges();                    //save changes
             }
         }
 
@@ -28,6 +28,7 @@ namespace Core.Concrete
             {
                 var deletedEntity = context.Entry(entity);  //get reference
                 deletedEntity.State = EntityState.Deleted;    //delete entity
+                context.SaveChanges();
 
             }
         }
@@ -38,7 +39,6 @@ namespace Core.Concrete
             {
                 return context.Set<Customer>().ToList();    /* we dont have any filter, if we had filter we would
                                                             use context.Set<Customer>().ToList().where(filter).ToList() */
-
             }
         }
 
@@ -47,8 +47,8 @@ namespace Core.Concrete
             using (DatabaseContext context = new DatabaseContext())
             {
                 var updatedEntity = context.Entry(entity);  //get reference
-                updatedEntity.State = EntityState.Modified;    //add entity
-
+                updatedEntity.State = EntityState.Modified;    //update entity
+                context.SaveChanges();                          //save changed
             }
         }
     }
