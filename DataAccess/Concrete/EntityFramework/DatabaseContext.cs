@@ -12,7 +12,8 @@ namespace DataAccess.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=KJFUIB1;Database=PhoneBook;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Data Source=KJ4FUIB1;Database=PhoneBook;Trusted_Connection=true"); 
+           /*(@"Server=KJFUIB1\90544;Database=PhoneBook;Trusted_Connection=true");*/
         }
         public DbSet<Customer> Customers { get; set; } 
 

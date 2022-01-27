@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Concrete
+namespace DataAccess.Concrete
 {
     public class EFCustomerDal : ICustomerDal
     {
@@ -28,17 +29,25 @@ namespace Core.Concrete
             {
                 var deletedEntity = context.Entry(entity);  //get reference
                 deletedEntity.State = EntityState.Deleted;    //delete entity
-                context.SaveChanges();
+                context.SaveChanges();              
 
             }
         }
 
-        public List<Customer> GetAll()
+        public Customer Get(Expression<Func<Customer, bool>> filter)
         {
             using (DatabaseContext context = new DatabaseContext())
             {
-                return context.Set<Customer>().ToList();    /* we dont have any filter, if we had filter we would
-                                                            use context.Set<Customer>().ToList().where(filter).ToList() */
+                return context.Set<Customer>().SingleOrDefault(filter);
+            }
+        }
+
+        public List<Customer> GetAll(Expression<Func<Customer, bool>> filter = null)
+        {
+            using (DatabaseContext context = new DatabaseContext())
+            {
+                return filter == null ? context.Set<Customer>().ToList() : context.Set<Customer>().Where(filter).ToList();
+                //if filter is null return all info, else return info according to filter
             }
         }
 

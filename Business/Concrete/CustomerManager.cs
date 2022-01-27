@@ -12,7 +12,7 @@ namespace Business.Concrete
     public class CustomerManager : ICustomerService
     {
         ICustomerDal _customerDal;
-        CustomerManager(ICustomerDal customerDal)
+        public CustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
         }
@@ -29,6 +29,16 @@ namespace Business.Concrete
         public List<Customer> GetAll()
         {
             return _customerDal.GetAll();
+        }
+
+        public Customer GetByCustomerName(string customerName)
+        {
+            return _customerDal.Get(p => p.CustomerName == customerName);
+        }
+
+        public Customer GetByPhoneNumber(string customerPhoneNumber)
+        {
+            return _customerDal.Get(p => p.CustomerPhoneNumber == customerPhoneNumber);
         }
 
         public void Update(Customer customer)
