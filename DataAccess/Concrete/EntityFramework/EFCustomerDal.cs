@@ -49,7 +49,7 @@ namespace DataAccess.Concrete
                 return filter == null ? context.Set<Customer>().ToList() : context.Set<Customer>().Where(filter).ToList();
                 //if filter is null return all info, else return info according to filter
             }
-        }
+        } 
 
         public void Update(Customer entity)
         {
