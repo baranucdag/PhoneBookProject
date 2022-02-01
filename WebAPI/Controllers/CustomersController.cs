@@ -19,45 +19,37 @@ namespace WebAPI.Controllers
             _customerService = customerService;
         }
 
-        [HttpGet("getall")]
-        public List<Customer> GetAll()
+        [HttpGet()]
+        public List<Customer> GetAll([FromQuery] CustomerQueryOption queryOptions)
         {
-            var result = _customerService.GetAll();
+            var result = _customerService.Get(queryOptions);
             return result;
         }
 
-        [HttpGet("getbycustomername")]
-        public Customer GetByCustomerName(string customerName)
+        [HttpGet("getbyid")]
+        public Customer GetByCustomerId(int id)
         {
-            var result = _customerService.GetByCustomerName(customerName);
-            return result; 
-        }
-
-        [HttpGet("getbycustomerphonenumber")]
-        public Customer GetBtCustomerPhoneNumber(string customerPhoneNumber)
-        {
-            var result = _customerService.GetByPhoneNumber(customerPhoneNumber);
+            var result = _customerService.getByCustomerId(id);
             return result;
         }
 
-        [HttpPost("add")]
+        [HttpPost()]
         public void Add(Customer customer)
         {
-            _customerService.Add(customer); 
+            _customerService.Add(customer);
         }
 
-        [HttpPost("update")]
+        [HttpPut()]
         public void Update(Customer customer)
         {
             _customerService.Update(customer);
         }
 
-        [HttpPost("delete")]
-        public void Delete(Customer customer)
+        [HttpDelete()]
+        public void Delete(int Id)
         {
-            _customerService.Delete(customer);
+            _customerService.Delete(new Customer { Id = Id });
         }
-
 
     }
 }

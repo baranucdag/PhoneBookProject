@@ -29,7 +29,7 @@ namespace DataAccess.Concrete
             {
                 var deletedEntity = context.Entry(entity);  //get reference
                 deletedEntity.State = EntityState.Deleted;    //delete entity
-                context.SaveChanges();              
+                context.SaveChanges();                      //save changes
 
             }
         }
@@ -46,18 +46,20 @@ namespace DataAccess.Concrete
         {
             using (DatabaseContext context = new DatabaseContext())
             {
-                return filter == null ? context.Set<Customer>().ToList() : context.Set<Customer>().Where(filter).ToList();
+                return filter == null ? context.Set<Customer>().AsNoTracking().ToList() : context.Set<Customer>().AsNoTracking().Where(filter).ToList();
                 //if filter is null return all info, else return info according to filter
+                //asNoTracking : avoid to get all database tables, with that ı get only releated infos 
             }
-        } 
+        }
 
         public void Update(Customer entity)
         {
             using (DatabaseContext context = new DatabaseContext())
             {
-                var updatedEntity = context.Entry(entity);  //get reference
-                updatedEntity.State = EntityState.Modified;    //update entity
-                context.SaveChanges();                          //save changed
+                var updatedEntity = context.Entry(entity);
+                updatedEntity.State = EntityState.Modified;
+                context.SaveChanges();
+
             }
         }
     }

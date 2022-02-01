@@ -10,10 +10,12 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
            CustomerManager customerManager = new CustomerManager(new EFCustomerDal());
-            foreach (var customer in customerManager.GetAll())
+            foreach (var customer in customerManager.GetIfContains("new"))
             {
-                Console.WriteLine(customer.CustomerDescription);
+                Console.WriteLine(customer.CustomerName);
             }
+            var result = customerManager.GetIfContains("new");
+            Console.WriteLine(result.Count);
             
         }
     }

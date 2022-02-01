@@ -1,11 +1,7 @@
-﻿using Business.Abstract;
+﻿using Entities;
+using Business.Abstract;
 using DataAccess.Abstract;
-using Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -26,24 +22,30 @@ namespace Business.Concrete
             _customerDal.Delete(customer);
         }
 
-        public List<Customer> GetAll()
+        public List<Customer> Get(CustomerQueryOption queryOption)
         {
-            return _customerDal.GetAll();
+            if (string.IsNullOrEmpty(queryOption.Search)) return _customerDal.GetAll();
+            return _customerDal.GetAll(x => x.CustomerPhoneNumber.Contains(queryOption.Search) || x.CustomerName.Contains(queryOption.Search));
         }
 
-        public Customer GetByCustomerName(string customerName)
+        public Customer getByCustomerId(int id)
         {
-            return _customerDal.Get(p => p.CustomerName == customerName);
+            return _customerDal.Get(p=>p.Id==id);
         }
 
-        public Customer GetByPhoneNumber(string customerPhoneNumber)
+        public List<Customer> GetIfContains(string input)
         {
-            return _customerDal.Get(p => p.CustomerPhoneNumber == customerPhoneNumber);
+            return _customerDal.GetAll(p => p.CustomerName.Contains(input) || p.CustomerPhoneNumber.Contains(input));
         }
 
         public void Update(Customer customer)
         {
             _customerDal.Update(customer);
         }
+    }
+
+    public class CustomerQueryOption
+    {
+        public string Search { get; set; }
     }
 }
