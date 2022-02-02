@@ -26,29 +26,29 @@ namespace WebAPI.Controllers
             return result;
         }
 
-        [HttpGet("getbyid")]
+        [HttpGet("getbyid/{id}")]
         public Customer GetByCustomerId(int id)
         {
             var result = _customerService.getByCustomerId(id);
             return result;
         }
 
-        [HttpPost()]
+        [HttpPost("add")]
         public void Add(Customer customer)
         {
             _customerService.Add(customer);
         }
 
-        [HttpPut()]
+        [HttpPost("update")]
         public void Update(Customer customer)
         {
             _customerService.Update(customer);
         }
 
-        [HttpDelete()]
-        public void Delete(int Id)
+        [HttpPost("delete")]
+        public void Delete(Customer customer)
         {
-            _customerService.Delete(new Customer { Id = Id });
+            _customerService.Delete(customer);
         }
 
     }
